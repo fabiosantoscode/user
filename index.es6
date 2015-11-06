@@ -29,10 +29,15 @@ export default class User {
   }
 
   getEntitlements(entitlement) {
-    const allEntitlements = this.splitValues(cookie.getCookie('mmcore.uat'), ';');
-    let requested = allEntitlements;
-    if (entitlement) {
-      requested = allEntitlements[entitlement];
+    let requested = {};
+    if (cookie.getCookie('mmcore.uat')) {
+      const allEntitlements = this.splitValues(cookie.getCookie('mmcore.uat'), ';');
+      requested = allEntitlements;
+      if (entitlement) {
+        requested = allEntitlements[entitlement];
+      }
+    } else {
+      requested = false;
     }
     return requested;
   }
