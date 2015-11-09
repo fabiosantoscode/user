@@ -4,15 +4,12 @@ const cookie = new Cookie();
 export default class User {
 
   splitValues(list, separator = ';') {
-    const splitObj = {};
-    list.split(separator)
-    .map((subStr) => {
-      let key = '';
-      let val = '';
-      [ key, val ] = subStr.trim().split('=').map(decodeURIComponent);
-      splitObj[key] = val;
-    });
-    return splitObj;
+    return list.split(separator)
+    .reduce((obj, subStr) => {
+      const [ key = '', val = '' ] = subStr.trim().split(/\s*=\s*/).map(decodeURIComponent);
+      obj[key] = val;
+      return obj;
+    }, {});
   }
 
   isLoggedIn() {
