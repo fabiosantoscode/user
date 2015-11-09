@@ -26,16 +26,10 @@ export default class User {
   }
 
   getEntitlements(entitlement) {
-    let requested = {};
     if (cookie.getCookie('mmcore.uat')) {
       const allEntitlements = this.splitValues(cookie.getCookie('mmcore.uat'), ';');
-      requested = allEntitlements;
-      if (entitlement) {
-        requested = allEntitlements[entitlement];
-      }
-    } else {
-      requested = false;
+      return (entitlement ? allEntitlements[entitlement] || {} : allEntitlements);
     }
-    return requested;
+    return false;
   }
 }
