@@ -155,9 +155,6 @@
     "react": "^0.14.2",
     "watchify": "^3.4.0"
   },
-  "peerDependencies": {
-    "react": "^0.14.0"
-  },
   "pre-commit": [
     "lint"
   ]
