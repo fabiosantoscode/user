@@ -1,7 +1,7 @@
 /* eslint-disable no-undef, id-match, no-underscore-dangle */
 import User from '../index';
 import spies from 'chai-spies';
-import Cookie from '@economist/cookie';
+import cookie from 'react-cookie';
 
 chai.use(spies);
 const fakeMmcoreUatCookie = `LogInState=LoggedIn;Subscriber=Subscribed;
@@ -27,11 +27,10 @@ describe('User', () => {
         SiteVersion: 'Desktop',
         OptlyEconomist: 'False',
       };
-      const fakeCookie = {
-        getCookie: () => fakeMmcoreUatCookie,
-      };
-      User.getEntitlements(null, fakeCookie).should.eql(expected);
-      User.getEntitlements('LogInState', fakeCookie).should.eql('LoggedIn');
+      cookie.save('mmcore.uat', fakeMmcoreUatCookie);
+      User.getEntitlements(null).should.eql(expected);
+      User.getEntitlements('LogInState').should.eql('LoggedIn');
+      cookie.remove('mmcore.uat');
     });
     describe('functions that use getEntitlements', () => {
       const _getEntitlements = User.getEntitlements;
@@ -61,13 +60,21 @@ describe('User', () => {
         User.getEntitlements.should.have.been.called.with('Subscriber');
       });
     });
-    it('isLoggedIn called the getCookie function', () => {
-      const fakeCookieObj = new Cookie();
-      fakeCookieObj.getCookie = chai.spy(() => {
-        return true;
-      });
-      User.isLoggedIn(fakeCookieObj);
-      fakeCookieObj.getCookie.should.have.been.called();
+    it('isLoggedIn check that user is loggedin', () => {
+      cookie.save('ec_uid', 1);
+      User.isLoggedIn().should.equal(true);
+    });
+    it('isLoggedIn check that user is not loggedin', () => {
+      cookie.remove('ec_uid');
+      User.isLoggedIn().should.equal(false);
+    });
+    it('isInternal check that user is in The Economist Network', () => {
+      cookie.save('ec_community', '10000000000');
+      User.isInternal().should.equal(true);
+    });
+    it('isInternal check that user is not in The Economist Network', () => {
+      cookie.remove('ec_community');
+      User.isInternal().should.equal(false);
     });
   });
 });

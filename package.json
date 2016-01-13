@@ -1,6 +1,6 @@
 {
   "name": "@economist/user",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Class that provides interfaces to read user properties",
   "author": "The Economist (http://economist.com)",
   "license": "ISC",
@@ -125,9 +125,6 @@
     "test": "karma start",
     "watch": "parallelshell 'npm run doc:watch' 'npm run prepublish:watch' 'npm run serve'"
   },
-  "dependencies": {
-    "@economist/cookie": "^1.0.0"
-  },
   "devDependencies": {
     "@economist/component-devpack": "^3.5.0",
     "babel": "^5.8.23",
@@ -157,5 +154,8 @@
   },
   "pre-commit": [
     "lint"
-  ]
+  ],
+  "dependencies": {
+    "react-cookie": "^0.4.3"
+  }
 }
