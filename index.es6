@@ -1,31 +1,22 @@
-import Cookie from '@economist/cookie';
+import cookie from 'react-cookie';
 
-const defaultCookie = new Cookie();
 const User = {
-  splitValues(list, separator = ';') {
-    return list.split(separator)
-    .reduce((obj, subStr) => {
-      const [ key = '', val = '' ] = subStr.trim().split(/\s*=\s*/).map(decodeURIComponent);
-      obj[key] = val;
-      return obj;
-    }, {});
+  isLoggedIn() {
+    return Boolean(cookie.load('ec_uid'));
   },
-  isLoggedIn(cookie = defaultCookie) {
-    // Maybe we can use just mmcore.
-    return cookie.getCookie('mm-logged-in-state');
+  // Check if the user is in the range of internal IP
+  isInternal() {
+    return (cookie.load('ec_community') === 10000000000);
   },
-  isRegistered(cookie = defaultCookie) {
-    return (User.getEntitlements('RegState', cookie) === 'Registered');
-  },
-  isSubscriber(cookie = defaultCookie) {
-    return (User.getEntitlements('Subscriber', cookie) === 'Subscribed');
-  },
-  getEntitlements(entitlement, cookie = defaultCookie) {
-    if (cookie.getCookie('mmcore.uat')) {
-      const allEntitlements = User.splitValues(cookie.getCookie('mmcore.uat'), ';');
-      return (entitlement ? allEntitlements[entitlement] || {} : allEntitlements);
+  setInternal(internal = true) {
+    if (internal) {
+      cookie.save('ec_community', 10000000000);
+    } else {
+      cookie.remove('ec_community');
     }
-    return false;
+  },
+  getSubscriberCookie() {
+    return cookie.load('ec_omniture_user_sub');
   },
 };
 export default User;
