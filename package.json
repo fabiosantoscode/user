@@ -1,7 +1,7 @@
 {
   "name": "@economist/user",
   "version": "2.0.0",
-  "description": "Class that provides interfaces to read user properties",
+  "description": "Class that provides interfaces to read user data",
   "author": "The Economist (http://economist.com)",
   "license": "ISC",
   "repository": {
