@@ -4,6 +4,9 @@ const User = {
   isLoggedIn() {
     return Boolean(cookie.load('ec_uid'));
   },
+  getUserId() {
+    return cookie.load('ec_uid');
+  },
   // Check if the user is in the range of internal IP
   isInternal() {
     return (cookie.load('ec_community') === 10000000000);

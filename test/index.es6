@@ -29,5 +29,12 @@ describe('User', () => {
       cookie.remove('ec_omniture_user_sub');
       (typeof User.getSubscriberCookie()).should.equal('undefined');
     });
+    it('getUserId return user-id or undefined', () => {
+      const userID = 120554;
+      cookie.save('ec_uid', userID);
+      User.getUserId().should.equal(userID);
+      cookie.remove('ec_uid');
+      (typeof User.getSubscriberCookie()).should.equal('undefined');
+    });
   });
 });
