@@ -14,13 +14,13 @@ describe('User', () => {
       cookie.remove('ec_uid');
       User.isLoggedIn().should.equal(false);
     });
-    it('isInternal check that user is in The Economist Network', () => {
+    it('isMultiUserLicense check that user is a MUL', () => {
       cookie.save('ec_community', '10000000000');
-      User.isInternal().should.equal(true);
+      User.isMultiUserLicense().should.equal(true);
     });
-    it('isInternal check that user is not in The Economist Network', () => {
+    it('isMultiUserLicense check that user is not a MUL', () => {
       cookie.remove('ec_community');
-      User.isInternal().should.equal(false);
+      User.isMultiUserLicense().should.equal(false);
     });
     it('getSubscriberCookie check the cookie with the subscriber information', () => {
       const subscriberInformation = 'registered|ent-product-A*2011/02/16|2014/09/30|ent-product-A';
