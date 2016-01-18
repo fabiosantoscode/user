@@ -4,12 +4,15 @@ const User = {
   isLoggedIn() {
     return Boolean(cookie.load('ec_uid'));
   },
-  // Check if the user is in the range of internal IP
-  isInternal() {
+  getUserId() {
+    return cookie.load('ec_uid');
+  },
+  // Check if the user is a MUL
+  isMultiUserLicense() {
     return (cookie.load('ec_community') === 10000000000);
   },
-  setInternal(internal = true) {
-    if (internal) {
+  setMultiUserLicense(mul = true) {
+    if (mul) {
       cookie.save('ec_community', 10000000000);
     } else {
       cookie.remove('ec_community');
