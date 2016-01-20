@@ -36,5 +36,18 @@ describe('User', () => {
       cookie.remove('ec_uid');
       (typeof User.getSubscriberCookie()).should.equal('undefined');
     });
+    it('getUserType return user type for anonymous', () => {
+      cookie.remove('ec_omniture_user_sub');
+      User.getUserType().should.equal('anonymous');
+    });
+    it('getUserType return user type for registered', () => {
+      cookie.remove('ec_omniture_user_sub');
+      cookie.save('ec_omniture_user_sub', 'registered|ent-product-A*2011/02/16|2014/09/30|ent-product-A');
+      User.getUserType().should.equal('registered');
+    });
+    it('getUserType return user type for digital-subscriber', () => {
+      cookie.save('ec_omniture_user_sub', 'digital-subscriber*2016/01/19');
+      User.getUserType().should.equal('digital-subscriber');
+    });
   });
 });
