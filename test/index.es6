@@ -49,5 +49,13 @@ describe('User', () => {
       cookie.save('ec_omniture_user_sub', 'digital-subscriber*2016/01/19');
       User.getUserType().should.equal('digital-subscriber');
     });
+    it('canEdit return true if user can Edit a content', () => {
+      cookie.save('ec_su', 'just a value');
+      User.canEdit().should.be.true;
+    });
+    it('canEdit return false if user can\'t Edit a content', () => {
+      cookie.remove('ec_su');
+      User.canEdit().should.be.false;
+    });
   });
 });
