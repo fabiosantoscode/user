@@ -23,6 +23,9 @@ const User = {
     }
     return userType;
   },
+  canEdit() {
+    return cookie.load('ec_su') !== undefined;
+  },
   // Check if the user is a MUL
   isMultiUserLicense() {
     return (cookie.load('ec_community') === 10000000000);
