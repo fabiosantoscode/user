@@ -1,9 +1,8 @@
-/* eslint-disable no-undef, id-match, no-underscore-dangle */
-import User from '../index';
-import spies from 'chai-spies';
+import 'babel-polyfill';
+import User from '../src';
+import chai from 'chai';
 import cookie from 'react-cookie';
-
-chai.use(spies);
+chai.should();
 describe('User', () => {
   describe('it provides differen interfaces to user state', () => {
     it('isLoggedIn check that user is loggedin', () => {
@@ -51,11 +50,11 @@ describe('User', () => {
     });
     it('canEdit return true if user can Edit a content', () => {
       cookie.save('ec_su', 'just a value');
-      User.canEdit().should.be.true;
+      User.canEdit().should.equal(true);
     });
     it('canEdit return false if user can\'t Edit a content', () => {
       cookie.remove('ec_su');
-      User.canEdit().should.be.false;
+      User.canEdit().should.equal(false);
     });
   });
 });

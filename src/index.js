@@ -1,6 +1,6 @@
 import cookie from 'react-cookie';
-
-const User = {
+const multiUserMagicNumber = 10000000000;
+export default {
   isLoggedIn() {
     return Boolean(cookie.load('ec_uid'));
   },
@@ -15,7 +15,7 @@ const User = {
     } else {
       // User info could be like this 'digital-subscriber*2016/01/19'
       userType = userInfo.split('*')[0];
-      if (userType.indexOf('|') > -1) {
+      if (userType.indexOf('|') >= 0) {
         // Or they could be like this
         // 'registered|ent-product-A*2011/02/16|2014/09/30|ent-product-A'
         userType = userType.split('|')[0];
@@ -24,15 +24,14 @@ const User = {
     return userType;
   },
   canEdit() {
-    return cookie.load('ec_su') !== undefined;
+    return Boolean(cookie.load('ec_su'));
   },
-  // Check if the user is a MUL
   isMultiUserLicense() {
-    return (cookie.load('ec_community') === 10000000000);
+    return cookie.load('ec_community') === multiUserMagicNumber;
   },
   setMultiUserLicense(mul = true) {
     if (mul) {
-      cookie.save('ec_community', 10000000000);
+      cookie.save('ec_community', multiUserMagicNumber);
     } else {
       cookie.remove('ec_community');
     }
@@ -41,4 +40,3 @@ const User = {
     return cookie.load('ec_omniture_user_sub');
   },
 };
-export default User;
