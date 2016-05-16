@@ -1,10 +1,10 @@
 {
-  "name": "@economist/component-user",
+  "name": "@economist/user",
   "version": "0.0.0-development",
   "description": "Class that provides interfaces to read user data",
-  "homepage": "https://github.com/economist-components/component-user",
+  "homepage": "https://github.com/economist-components/user",
   "bugs": {
-    "url": "https://github.com/economist-components/component-user/issues"
+    "url": "https://github.com/economist-components/user/issues"
   },
   "license": "MIT",
   "author": "The Economist (http://economist.com)",
