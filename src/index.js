@@ -2,10 +2,22 @@ import cookie from 'react-cookie';
 const multiUserMagicNumber = 10000000000;
 export default {
   isLoggedIn() {
-    return Boolean(cookie.load('ec_uid'));
+    const userCookie = cookie.load('Econ.user.user');
+    const userId = cookie.load('ec_uid');
+    if (typeof userId !== 'undefined') {
+      return userId !== 0;
+    } else if (userCookie) {
+      return Boolean(userCookie.uid) && userCookie.name !== null;
+    }
+    return false;
   },
   getUserId() {
-    return cookie.load('ec_uid');
+    const userId = cookie.load('ec_uid');
+    const userCookie = cookie.load('Econ.user.user');
+    if (typeof userId !== 'undefined') {
+      return userId;
+    }
+    return userCookie && userCookie.uid || 0;
   },
   getUserType() {
     const userInfo = cookie.load('ec_omniture_user_sub');
