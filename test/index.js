@@ -5,12 +5,29 @@ import cookie from 'react-cookie';
 chai.should();
 describe('User', () => {
   describe('it provides differen interfaces to user state', () => {
-    it('isLoggedIn check that user is loggedin', () => {
+    beforeEach(() => {
+      cookie.remove('Econ.user.user');
+      cookie.remove('ec_uid');
+    });
+
+    it('isLoggedIn check that user is loggedin (ec_uid)', () => {
       cookie.save('ec_uid', 1);
       User.isLoggedIn().should.equal(true);
     });
+
+    it('isLoggedIn check that user is loggedin (Econ.user.user)', () => {
+      cookie.save('Econ.user.user',
+        { uid: '3854922', name: 'vCywQBDmUf', country: {
+          id: 74,
+          iso: 'GB',
+          name: 'United+Kingdom',
+          region: 'UK',
+        } }
+      );
+      User.isLoggedIn().should.equal(true);
+    });
+
     it('isLoggedIn check that user is not loggedin', () => {
-      cookie.remove('ec_uid');
       User.isLoggedIn().should.equal(false);
     });
     it('isMultiUserLicense check that user is a MUL', () => {
@@ -28,11 +45,17 @@ describe('User', () => {
       cookie.remove('ec_omniture_user_sub');
       (typeof User.getSubscriberCookie()).should.equal('undefined');
     });
-    it('getUserId return user-id or undefined', () => {
+    it('getUserId return user-id or undefined (ec_uid)', () => {
       const userID = 120554;
       cookie.save('ec_uid', userID);
       User.getUserId().should.equal(userID);
       cookie.remove('ec_uid');
+      (typeof User.getSubscriberCookie()).should.equal('undefined');
+    });
+    it('getUserId return user-id or undefined (Econ.user.user)', () => {
+      cookie.save('Econ.user.user', { uid: 3854922 });
+      User.getUserId().should.equal(3854922);
+      cookie.remove('Econ.user.user');
       (typeof User.getSubscriberCookie()).should.equal('undefined');
     });
     it('getUserType return user type for anonymous', () => {
